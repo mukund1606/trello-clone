@@ -114,10 +114,12 @@ export default function Tasks() {
       const activeTaskIndex = tasks.findIndex(
         (task) => task.id === activeStatusId,
       );
-      updateStatusRoute.mutate({
-        id: tasks[activeTaskIndex]!.id,
-        status: overStatusId as Status,
-      });
+      if (tasks[activeTaskIndex]!.status !== overStatusId) {
+        updateStatusRoute.mutate({
+          id: tasks[activeTaskIndex]!.id,
+          status: overStatusId as Status,
+        });
+      }
       setTasks((tasks) => {
         if (!tasks) return;
         tasks[activeTaskIndex]!.status = overStatusId as Status;
